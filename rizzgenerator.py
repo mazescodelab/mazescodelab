@@ -1,0 +1,118 @@
+import random
+import re
+
+pickup_lines = {
+    1: "Look, [name], you’re a lovely girl, so let me just be frank here...",
+    2: "I would do battle with a pack of wild mountain lions inside of a handicapped stall...",
+    3: "Are you into fitness? How bout fitness dick in your mouth?",
+    4: "Are you into dragons? Cos you're gonna love it when I'm dragon these nuts...",
+    5: "Is your father in jail? Because if I was your father, I'd be in jail.",
+    6: "I heard you are looking for a stud. I've got the STD; all I need is u.",
+    7: "I'm not sure what's smaller: the chance that you aren't going to let me smash or my penis.",
+    8: "I've had sex with -1 girls. Wanna get even?",
+    9: "Do you like BLTs? Because I wanna B my L on your T's.",
+    10: "I don't have much time so just listen. I'm from the future, and in the future...",
+    11: "Roses are red. Violets are fine. I'll be the the six. If you be the nine.",
+    12: "Can you believe there's going to be 7 planets left soon?! After I destroy Uranus.",
+    13: "Feel free to use my face as a mechanical bull.",
+    14: "Do you know what I would do if I could rearrange the alphabet? I'd put my P in your B hole...",
+    15: "Your family will hate me. I'll try to get with your best friend, I never remember to pay the bills...",
+    16: "20 questions. You first. Ever done butt stuff?",
+    17: "I would live in your tits.",
+    18: "I would live in your ass.",
+    19: "You better not shout, you better not cry, you better not pout, I'm coming in dry.",
+    20: "You make all the other girls on tinder look like Rosie O'Donnel's bowel movement.",
+    21: "How would you feel about a guy who braids his chest hair?",
+    22: "When I saw your picture, I just knew I had to swipe right...",
+    23: "Wow [name], you're an angel. I am going to consult Mahatma Gandhi's famous quote...",
+    24: "Hey there. So my roommate is jerking his chicken so loudly that I can hear it through the door...",
+    25: "My couch pulls out but I don't",
+    26: "Do you like to draw? Because I put the d in raw.",
+    27: "When I look at your pics I hear Kelly Clarkson songs and blood immediately goes to my penis...",
+    28: "Can I kiss you where you pee?",
+    29: "I know what you're thinking...Yes. It is only 5 inches. But it's a beefy 5 inches...",
+    30: "I prefer my women like my coffee. Without clothes on and with my dick in their ass...",
+    31: "So...you gonna let me make you cum so hard your shrieks of pleasure shatter all of the windows...",
+    32: "I. I believe. I believe you'll. I believe you'll send. I believe you'll send me nudes...I believe you'll send me nudes...",
+    33: "I'd love to chain you to a radiator in my basement and make you cut out pictures of eyes from Cosmo magazines.",
+    34: "I would brush my teeth with you",
+    35: "Ever been in an Amber Alert? Do you want to be?",
+    36: "I'm going to disappoint you so good",
+    37: "Anal or nah?",
+    38: "If I flip a coin, what are the odds that I'll get head?",
+    39: "Ay girl. I would pick you up in my '98 Nissan with a body kit, take you to Taco Bell and put it all on debit...",
+    40: "Brian, Carlos, Evan, Dana and Farra are trying to find seats in a movie theater...",
+    41: "Ay gurl r u a prius? Cuz u aren't giving me any sounds or indications that u r turned on right now",
+    42: "Your body is 70% water and I am thirsty!",
+    43: "When I was born I had two choices: to have a perfect memory, or to have a huge dick...",
+    44: "What do you look like naked?",
+    45: "Describe your boobs accurately in one word",
+    46: "Show me your shit box u whore",
+    47: "Damn girl...you make me wanna knit both of us matching sweaters",
+    48: "Oh heavenly, blessed beauty, I'd love to cuddle up with you under some warm blankets and watch Netflix...",
+    49: "Fuck/Marry/Kill: Me, Hitler, and me again. Go!",
+    50: "I'd piss in your butt...Erotically.",
+    51: "I'll never forget my grandfathers last words. They hold a deep meaning to me. 'HOLY SHIT A TRUCK'",
+    52: "Are you the SAT? Cause I'd do you for 3 hours and 45 minutes, stopping periodically for snack breaks.",
+    53: "I have a top hat that fits on my penis.",
+    54: "You look like you hurting for a squirtin",
+    55: "I just got pulled over by a cop writing my first message to you...",
+    56: "Hey you! Sorry, my phone auto corrected my message. What I really said was...",
+    57: "Oh heavenly, blessed one, whose beauty is as timeless as those of the great pyramids!...",
+    58: "I would tea bag a bear trap just to see you naked.",
+    59: "I want you to be the first girl I use Plan B with",
+    60: "I would love to tickle your tummy. From the inside.",
+    61: "If I could rearrange the alphabet I'd put my dick in your ass",
+    62: "I would drag my dick through a mile of broken glass just to see you naked on an old CRT television with lots of static",
+    63: "I don't mean to offend you, but would you please donate a picture of your tits or ass for charity?",
+    64: "Do you like CDs and tapes? Cuz you're gonna C Deez nuts when I take my dick to your forehead",
+    65: "[name] I'm going to be 100% honest with you. I saw your pictures and the first thing I though is...",
+    66: "Are you opposed to butt stuff?",
+    67: "Can I stick my finger up your butt hole?",
+    68: "R u into anal",
+    69: "Use my face as a bicycle seat.",
+    70: "I have one question and one question only: butt stuff?",
+    71: "I have just one question for you before I get your number. What's your number?",
+    72: "How about you and I grab a gourmet dollar menu dinner together sometimes? My treat",
+    73: "do you work at subway? because you give me a footlong",
+    74: "That outfit looks really good on you. Then again, so would I.",
+    75: "How do you like your eggs in the morning girl? Fertilized?",
+    76: "Ayy girl. They call me Snowstorm, because I can give you a few inches and really inconvenience your evening.",
+    77: "Is there a keg in your pants? Because I want to tap that ass.",
+    78: "Ay girl are you a beaver? Cuz dam.",
+    79: "plz respond",
+    80: "AYO GIRL LEMME CLAP DEM CHEEKS",
+    81: "Girl, you been to Ireland? Because every time I see you my penis is Dublin.",
+    82: "Hey. Bad news: my dick just died. Can I bury it in your ass?",
+    83: "Ay babe, you from Iraq? Cuz I think you should Baghdad ass up, gurrrl",
+    84: "Babe you should sell hot dogs, because you already know how to make a weiner stand.",
+    85: "I want to cover you in green paint and spank you like a disobedient avocado.",
+    86: "Are there 21 letters in the alphabet? Oh wait never mind, I forgot u r a q t",
+    87: "I'd rate you 9/10, but it's lucky we met, because I'm the 1 you need.",
+    88: "Wow. Are you a parking ticket? Cos you got 'fine' written all over you.",
+    89: "Do you have any Italian in you? Want some?",
+    90: "Damn. I wish you were my big toe so I could bang you on my coffee table.",
+    91: "You must be gasoline, cos even though you're expensive, I'd still pump you in my van",
+    92: "Girl you must be stage 3 Neurosyphillis because I can't get you out of my mind",
+    93: "Do you have pet insurance? Because I'm about to destroy your pussy.",
+    94: "Do you like Wendys? Cos you're gonna love it Wendys nuts slap your face",
+    95: "Are you a carpenter? Cuz I got some hardwood that needs sanding",
+    96: "Girl, I'd love to kiss you just once on the lips, then maybe I'd move up to your waist",
+    97: "Are you an antique? Because I have some junk that hasn't been touched in years."
+}
+
+sentence = pickup_lines[random.randrange(0, 97)]
+random_words = ["skibidi", "gyatt", "kai", "cenat", "alpha", "beta", "sigma", "ohio", "grimace", "fanum"]
+
+def replace_nouns(sentence):
+    # Define a regex pattern to match nouns
+    pattern = r'\b(?:[A-Z]\w*)\b'
+    # Replace nouns with random words
+    replaced_sentence = re.sub(pattern, lambda x: random.choice(random_words), sentence)
+    return replaced_sentence
+
+def main():
+    replaced_line = replace_nouns(sentence)
+    print(replaced_line)
+
+main()
