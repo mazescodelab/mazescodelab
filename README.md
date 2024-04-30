@@ -1,0 +1,7 @@
+- 👋 Hi, I’m @mazescodelab
+- 👀 I’m interested in silly projects
+- 🌱 I’m currently learning sql
+- 💞️ I’m looking to collaborate on my silly projects
+- 📫 How to reach me mazescodelab@gmail.com
+- 😄 Pronouns: she/her
+- ⚡ Fun fact: i love cats :3
